@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ana de Góngora</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;1,300;1,400&family=Raleway:wght@200;300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #ffffff;
+      --text: #1a1816;
+      --text-light: #7a7572;
+      --mid: #b0ada7;
+      --light: #e8e6e3;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Raleway', sans-serif;
+      font-weight: 300;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 13px;
+      letter-spacing: 0.04em;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 2rem 3rem;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.4s;
+    }
+    nav.scrolled { border-color: var(--light); }
+
+    .nav-name {
+      font-family: 'Cormorant', serif;
+      font-weight: 300;
+      font-size: 1.1rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 10.5px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mid);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--text); }
+
+    /* ─── MOBILE MENU ─── */
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .menu-toggle span {
+      display: block;
+      width: 20px;
+      height: 1px;
+      background: var(--text);
+      margin: 5px 0;
+      transition: all 0.3s;
+    }
+
+    /* ─── SECTIONS ─── */
+    section {
+      padding: 0 3rem;
+    }
+
+    #work {
+      padding-top: 8rem;
+    }
+
+    .section-label {
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 4rem;
+    }
+
+    /* ─── WORKS — scroll continuo ─── */
+    .work {
+      max-width: 900px;
+      margin: 0 auto 100px auto;
+      position: relative;
+    }
+
+    .work:last-child {
+      margin-bottom: 140px;
+    }
+
+    .work img {
+      width: 100%;
+      display: block;
+    }
+
+    .work .caption {
+      position: absolute;
+      bottom: 12px;
+      left: 14px;
+      font-size: 12px;
+      line-height: 1.6;
+      color: white;
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.4);
+    }
+
+    .work:hover .caption {
+      opacity: 1;
+    }
+
+    .caption em {
+      font-family: 'Cormorant', serif;
+      font-size: 14px;
+      font-style: italic;
+    }
+
+    .caption .meta {
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.85);
+      margin-top: 2px;
+    }
+
+    /* ─── BIO ─── */
+    #bio {
+      max-width: 900px;
+      margin: 0 auto;
+      padding-top: 6rem;
+      padding-bottom: 5rem;
+    }
+
+    .bio-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .bio-photo {
+      width: 100%;
+      overflow: hidden;
+    }
+    .bio-photo img {
+      width: 100%;
+      display: block;
+      filter: grayscale(10%);
+    }
+    .bio-text { padding-top: 0.5rem; }
+
+    .text-body {
+      font-family: 'Cormorant', serif;
+      font-size: 1.2rem;
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--text);
+    }
+    .text-body p + p { margin-top: 1.5rem; }
+
+    /* ─── STATEMENT ─── */
+    #statement {
+      max-width: 680px;
+      margin: 0 auto;
+      padding-bottom: 5rem;
+    }
+
+    /* ─── CONTACT ─── */
+    #contact {
+      max-width: 680px;
+      margin: 0 auto;
+      padding-bottom: 5rem;
+    }
+
+    .contact-line {
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      color: var(--text-light);
+      margin-top: 1rem;
+    }
+    .contact-line a {
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px solid var(--light);
+      transition: border-color 0.3s;
+    }
+    .contact-line a:hover { border-color: var(--text); }
+
+    .contact-label {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-top: 3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      padding: 2rem 3rem;
+      border-top: 1px solid var(--light);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    footer p {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      color: var(--mid);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      nav { padding: 1.4rem 1.5rem; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0; right: 0;
+        background: rgba(255,255,255,0.98);
+        backdrop-filter: blur(6px);
+        flex-direction: column;
+        padding: 1.5rem;
+        gap: 1.2rem;
+        border-bottom: 1px solid var(--light);
+      }
+      .nav-links.open { display: flex; }
+      .menu-toggle { display: block; }
+
+      section { padding-left: 1.5rem; padding-right: 1.5rem; }
+      #work { padding-top: 6rem; }
+
+      .work { margin-bottom: 70px; }
+      .work:last-child { margin-bottom: 100px; }
+
+      /* En móvil caption siempre visible */
+      .work .caption {
+        position: relative;
+        bottom: auto; left: auto;
+        opacity: 1;
+        color: var(--text-light);
+        text-shadow: none;
+        padding-top: 10px;
+      }
+      .caption em { color: var(--text); }
+      .caption .meta { color: var(--text-light); }
+
+      #bio, #statement, #contact { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .bio-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+      footer { padding: 1.5rem; }
+    }
+
+    @media (max-width: 480px) {
+      .nav-name { font-size: 0.95rem; }
+      .work { margin-bottom: 60px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── NAV ─── -->
+  <nav id="nav">
+    <a href="#work" class="nav-name">Ana de Góngora</a>
+    <button class="menu-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#bio">Bio</a></li>
+      <li><a href="#statement">Statement</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ─── WORK — scroll continuo, orden curatorial ─── -->
+  <section id="work">
+
+    <!-- 1. ENTRADA — impacto fuerte, formatos grandes -->
+
+    <div class="work">
+      <img src="img/REF0027.jpg" alt="Between Forest and Sea">
+      <div class="caption">
+        <em>Between Forest and Sea</em>
+        <div class="meta">2025 — Acrylic on canvas, 200 × 100 cm</div>
+      </div>
+    </div>
+
+    <div class="work">
+      <img src="img/degongora_ana_1.jpg" alt="Zenith of the Forgotten">
+      <div class="caption">
+        <em>Zenith of the Forgotten</em>
+        <div class="meta">2025 — Acrylic on canvas, 61 × 200 cm</div>
+      </div>
+    </div>
+
+    <div class="work">
+      <img src="img/degongora_ana_4.jpg" alt="Fading into the Ether">
+      <div class="caption">
+        <em>Fading into the Ether</em>
+        <div class="meta">2025 — Acrylic on canvas, 50 × 200 cm</div>
+      </div>
+    </div>
+
+    <!-- 2. ATMÓSFERA — ambientes suspendidos -->
+
+    <div class="work">
+      <img src="img/REF_001.jpg" alt="Antes de desaparecer">
+      <div class="caption">
+        <em>Antes de desaparecer</em>
+        <div class="meta">2025 — Acrylic on canvas, 160 × 100 cm</div>
+      </div>
+    </div>
+
+    <div class="work">
+      <img src="img/REF_002.jpg" alt="Entre la niebla y el olvido">
+      <div class="caption">
+        <em>Entre la niebla y el olvido</em>
+        <div class="meta">2025 — Acrylic on canvas, 160 × 100 cm</div>
+      </div>
+    </div>
+
+    <div class="work">
+      <img src="img/REF_003.jpg" alt="Espacio sin nombre">
+      <div class="caption">
+        <em>Espacio sin nombre</em>
+        <div class="meta">2025 — Acrylic on canvas, 160 × 100 cm</div>
+      </div>
+    </div>
+
+    <!-- 3. RITMO — variación, tensión -->
+
+    <div class="work">
+      <img src="img/REF_004.jpg" alt="La caída lenta I">
+      <div class="caption">
+        <em>La caída lenta I</em>
+        <div class="meta">2025 — Acrylic on canvas, 82 × 100 cm</div>
+      </div>
+    </div>
+
+    <div class="work">
+      <img src="img/REF_005.jpg" alt="La caída lenta II">
+      <div class="caption">
+        <em>La caída lenta II</em>
+        <div class="meta">2025 — Acrylic on canvas, 82 × 100 cm</div>
+      </div>
+    </div>
+
+    <div class="work">
+      <img src="img/degongora_ana_7.jpg" alt="Whispers in the Abyss">
+      <div class="caption">
+        <em>Whispers in the Abyss</em>
+        <div class="meta">2025 — Acrylic on canvas, 120 × 150 cm</div>
+      </div>
+    </div>
+
+    <!-- 4. PROFUNDIDAD — peso estructural -->
+
+    <div class="work">
+      <img src="img/REF_007.jpg" alt="-12 m">
+      <div class="caption">
+        <em>-12 m</em>
+        <div class="meta">2025 — Acrylic on canvas, 147 × 100 cm</div>
+      </div>
+    </div>
+
+    <div class="work">
+      <img src="img/REF_006.jpg" alt="Campo sin origen">
+      <div class="caption">
+        <em>Campo sin origen</em>
+        <div class="meta">2025 — Acrylic on canvas, 140 × 70 cm</div>
+      </div>
+    </div>
+
+    <div class="work">
+      <img src="img/degongora_ana_5.jpg" alt="The Hollow Horizon">
+      <div class="caption">
+        <em>The Hollow Horizon</em>
+        <div class="meta">2025 — Acrylic on canvas, 70 × 140 cm</div>
+      </div>
+    </div>
+
+    <div class="work">
+      <img src="img/degongora_ana_6.jpg" alt="Echoes Where Sky Meets Shadows">
+      <div class="caption">
+        <em>Echoes Where Sky Meets Shadows</em>
+        <div class="meta">2025 — Acrylic on canvas, 50 × 150 cm</div>
+      </div>
+    </div>
+
+    <!-- 5. INTIMIDAD — piezas más contenidas -->
+
+    <div class="work">
+      <img src="img/REF_008.jpg" alt="El peso del agua I">
+      <div class="caption">
+        <em>El peso del agua I</em>
+        <div class="meta">2025 — Acrylic on canvas, 100 × 50 cm</div>
+      </div>
+    </div>
+
+    <div class="work">
+      <img src="img/REF_009.jpg" alt="El peso del agua II">
+      <div class="caption">
+        <em>El peso del agua II</em>
+        <div class="meta">2025 — Acrylic on canvas, 150 × 50 cm</div>
+      </div>
+    </div>
+
+    <div class="work">
+      <img src="img/degongora_ana_2.jpg" alt="Penumbra's Breath">
+      <div class="caption">
+        <em>Penumbra's Breath</em>
+        <div class="meta">2025 — Acrylic on canvas, 55 × 138 cm</div>
+      </div>
+    </div>
+
+    <div class="work">
+      <img src="img/degongora_ana_3.jpg" alt="Ethereal Anchors in Nothingness">
+      <div class="caption">
+        <em>Ethereal Anchors in Nothingness</em>
+        <div class="meta">2025 — Acrylic on canvas, 61 × 152 cm</div>
+      </div>
+    </div>
+
+    <div class="work">
+      <img src="img/degongora_ana_9.jpg" alt="Hollow Helix">
+      <div class="caption">
+        <em>Hollow Helix</em>
+        <div class="meta">2025 — Acrylic on canvas, 55 × 138 cm</div>
+      </div>
+    </div>
+
+    <div class="work">
+      <img src="img/degongora_ana_8.jpg" alt="Ashes of the Golden Hour">
+      <div class="caption">
+        <em>Ashes of the Golden Hour</em>
+        <div class="meta">2025 — Acrylic on canvas, 36 × 72 cm</div>
+      </div>
+    </div>
+
+    <!-- 6. TRANSFORMACIÓN — nueva fase 2026 -->
+
+    <div class="work">
+      <img src="img/REF_0010.jpg" alt="Antes de la forma">
+      <div class="caption">
+        <em>Antes de la forma</em>
+        <div class="meta">2026 — Acrylic on canvas, 140 × 70 cm</div>
+      </div>
+    </div>
+
+    <div class="work">
+      <img src="img/REF_0011.jpg" alt="Después del rojo">
+      <div class="caption">
+        <em>Después del rojo</em>
+        <div class="meta">2026 — Acrylic on canvas, 92 × 100 cm</div>
+      </div>
+    </div>
+
+    <div class="work">
+      <img src="img/degongora_ana_10.jpg" alt="Crimson Between Shadows">
+      <div class="caption">
+        <em>Crimson Between Shadows</em>
+        <div class="meta">2025 — Acrylic on canvas, 32 × 42 cm (×4)</div>
+      </div>
+    </div>
+
+    <!-- 7. DISOLUCIÓN — cierre curatorial -->
+
+    <div class="work">
+      <img src="img/REF_0012.jpg" alt="Materia que se esfuma">
+      <div class="caption">
+        <em>Materia que se esfuma</em>
+        <div class="meta">2026 — Acrylic on canvas, 50 × 50 cm</div>
+      </div>
+    </div>
+
+    <div class="work">
+      <img src="img/REF_0013.jpg" alt="Lo que casi fue">
+      <div class="caption">
+        <em>Lo que casi fue</em>
+        <div class="meta">2026 — Acrylic on canvas, 120 × 40 cm</div>
+      </div>
+    </div>
+
+    <div class="work">
+      <img src="img/REF_0014.jpg" alt="Lo que casi fue II">
+      <div class="caption">
+        <em>Lo que casi fue II</em>
+        <div class="meta">2026 — Acrylic on canvas, 120 × 40 cm</div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ─── BIO ─── -->
+  <section id="bio">
+    <p class="section-label">Bio</p>
+    <div class="bio-layout">
+      <div class="bio-photo">
+        <img src="img/ANA_ESTUDIO.jpg" alt="Ana de Góngora in her studio">
+      </div>
+      <div class="bio-text">
+        <div class="text-body">
+          <p>Ana de Góngora is a visual artist whose practice focuses on the transformation of matter and the instability of form. Her work occupies an intermediate space between appearance and disappearance, where color constructs suspended environments and structures that seem to hold a latent energy.</p>
+          <p>She holds a degree in Fine Arts from the Complutense University of Madrid. Prior to fully dedicating her practice to painting, she developed an extensive career in graphic design and industrial furniture design, which informs her sensitivity to space, proportion, and formal tension.</p>
+          <p>Her work is currently represented by Alfa Gallery in Miami and New York, and she has recently begun collaborating with Helarea, marking a new phase centered on pictorial research.</p>
+          <p>She lives and works in Madrid.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── STATEMENT ─── -->
+  <section id="statement">
+    <p class="section-label">Statement</p>
+    <div class="text-body">
+      <p>My work explores the transformation of matter and the instability of form, inhabiting a space between appearance and disappearance. Through painting, I construct suspended environments where color operates as both structure and atmosphere, generating a sense of latent energy.</p>
+      <p>In a context defined by visual saturation and the constant consumption of digital images, my practice positions itself as a gesture of resistance. It seeks to reduce noise and reclaim slowness, material presence, and the physical experience of looking.</p>
+      <p>Working through layers, density, and repetition, I develop compositions that negotiate balance and gravity. The surface becomes a field of tension, where forms emerge and dissolve, suggesting states rather than fixed images.</p>
+    </div>
+  </section>
+
+  <!-- ─── CONTACT ─── -->
+  <section id="contact">
+    <p class="section-label">Contact</p>
+    <div class="text-body">
+      <p>For inquiries, studio visits, or exhibition proposals, please get in touch.</p>
+    </div>
+    <div style="margin-top: 2rem;">
+      <p class="contact-line">Email — <a href="mailto:ana.degongora@gmail.com">ana.degongora@gmail.com</a></p>
+      <p class="contact-line">Phone — <a href="tel:+34645023872">+34 645 023 872</a></p>
+      <p class="contact-line">Instagram — <a href="https://instagram.com/ana_de_gongora" target="_blank">@ana_de_gongora</a></p>
+      <p class="contact-label">Represented by</p>
+      <p class="contact-line">Alfa Gallery — Miami & New York</p>
+      <p class="contact-line">Helarea — Madrid</p>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ─── -->
+  <footer>
+    <p>&copy; 2026 Ana de Góngora</p>
+    <p>Madrid, Spain</p>
+  </footer>
+
+  <!-- ─── SCRIPTS ─── -->
+  <script>
+    // Nav scroll effect
+    window.addEventListener('scroll', () => {
+      document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    // Active nav link
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 200) current = s.getAttribute('id');
+      });
+      navLinks.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+      });
+    });
+
+    // Close mobile menu on link click
+    document.querySelectorAll('.nav-links a').forEach(a => {
+      a.addEventListener('click', () => {
+        document.querySelector('.nav-links').classList.remove('open');
+      });
+    });
+  </script>
+
+</body>
+</html>
